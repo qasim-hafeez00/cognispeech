@@ -394,18 +394,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **FastAPI** for the robust backend framework
 - **React** for the modern frontend framework
 
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/qasim-hafeez00/cognispeech/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/qasim-hafeez00/cognispeech/discussions)
-- **Wiki**: [Project Wiki](https://github.com/qasim-hafeez00/cognispeech/wiki)
-
-## 🌟 Star History
-
-If you find this project helpful, please consider giving it a ⭐️ on GitHub!
-
----
-
-**Made with ❤️ by the CogniSpeech Team**
 
 *Empowering speech analysis through AI innovation*
