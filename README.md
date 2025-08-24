@@ -48,7 +48,7 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/cognispeech.git
+git clone https://github.com/qasim-hafeez00/cognispeech.git
 cd cognispeech
 ```
 
@@ -385,9 +385,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/cognispeech/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/cognispeech/discussions)
-- **Wiki**: [Project Wiki](https://github.com/yourusername/cognispeech/wiki)
+- **Issues**: [GitHub Issues](https://github.com/qasim-hafeez00/cognispeech/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/qasim-hafeez00/cognispeech/discussions)
+- **Wiki**: [Project Wiki](https://github.com/qasim-hafeez00/cognispeech/wiki)
 
 ## 🌟 Star History
 
