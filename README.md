@@ -89,9 +89,20 @@ The frontend will be available at `http://localhost:3000`
 
 ### 4. Docker Deployment (Recommended)
 
+#### **Production Deployment**
 ```bash
 # From project root
 docker-compose up -d
+
+# Or use the provided script
+./build-and-run.sh          # Linux/Mac
+build-and-run.bat           # Windows
+```
+
+#### **Development Deployment**
+```bash
+# For development with hot reloading
+docker-compose -f docker-compose.dev.yml up -d
 ```
 
 This will start both backend and frontend services automatically.

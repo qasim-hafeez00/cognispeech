@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   backend:
@@ -9,20 +9,26 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./Backend:/app
+      - backend-data:/app/data
       - backend-uploads:/app/uploads
       - backend-logs:/app/logs
       - backend-cache:/app/cache
       - backend-models:/app/model_cache
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/cognispeech
-      - DEBUG=true
-      - NODE_ENV=development
-    depends_on:
-      - db
+      - DATABASE_URL=sqlite:///./data/cognispeech.db
+      - MAX_FILE_SIZE=52428800
+      - WHISPER_MODEL=base.en
+      - SENTIMENT_MODEL=siebert/sentiment-roberta-large-english
+      - DEBUG=false
     restart: unless-stopped
     networks:
       - cognispeech-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/analysis/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   frontend:
     build:
@@ -31,49 +37,23 @@ services:
     container_name: cognispeech-frontend
     ports:
       - "3000:80"
-    volumes:
-      - ./Second_Frontend:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
-      - REACT_APP_API_URL=http://localhost:8000
+      - NODE_ENV=production
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - cognispeech-network
-
-  db:
-    image: postgres:15-alpine
-    container_name: cognispeech-db
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=cognispeech
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./Backend/supabase/migrations:/docker-entrypoint-initdb.d
-    restart: unless-stopped
-    networks:
-      - cognispeech-network
-
-  # Optional: Redis for caching
-  redis:
-    image: redis:7-alpine
-    container_name: cognispeech-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-    restart: unless-stopped
-    networks:
-      - cognispeech-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 volumes:
-  postgres-data:
-  redis-data:
+  backend-data:
   backend-uploads:
   backend-logs:
   backend-cache:

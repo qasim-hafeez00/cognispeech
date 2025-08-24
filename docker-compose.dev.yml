@@ -1,0 +1,56 @@
+
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile.dev
+    container_name: cognispeech-backend-dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Backend:/app
+      - backend-uploads:/app/uploads
+      - backend-logs:/app/logs
+      - backend-cache:/app/cache
+      - backend-models:/app/model_cache
+    environment:
+      - DATABASE_URL=sqlite:///./cognispeech.db
+      - MAX_FILE_SIZE=52428800
+      - WHISPER_MODEL=base.en
+      - SENTIMENT_MODEL=siebert/sentiment-roberta-large-english
+      - DEBUG=true
+    restart: unless-stopped
+    networks:
+      - cognispeech-network-dev
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  frontend:
+    build:
+      context: ./Second_Frontend
+      dockerfile: Dockerfile.dev
+    container_name: cognispeech-frontend-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Second_Frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_BASE_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - cognispeech-network-dev
+    command: ["npm", "run", "dev"]
+
+volumes:
+  backend-uploads:
+  backend-logs:
+  backend-cache:
+  backend-models:
+
+networks:
+  cognispeech-network-dev:
+    driver: bridge
