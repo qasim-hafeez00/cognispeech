@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: cognispeech-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Backend:/app
+      - backend-uploads:/app/uploads
+      - backend-logs:/app/logs
+      - backend-cache:/app/cache
+      - backend-models:/app/model_cache
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/cognispeech
+      - DEBUG=true
+      - NODE_ENV=development
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - cognispeech-network
+
+  frontend:
+    build:
+      context: ./Second_Frontend
+      dockerfile: Dockerfile
+    container_name: cognispeech-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./Second_Frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - cognispeech-network
+
+  db:
+    image: postgres:15-alpine
+    container_name: cognispeech-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=cognispeech
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./Backend/supabase/migrations:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+      - cognispeech-network
+
+  # Optional: Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: cognispeech-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - cognispeech-network
+
+volumes:
+  postgres-data:
+  redis-data:
+  backend-uploads:
+  backend-logs:
+  backend-cache:
+  backend-models:
+
+networks:
+  cognispeech-network:
+    driver: bridge

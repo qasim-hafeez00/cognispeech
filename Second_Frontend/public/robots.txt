@@ -1,0 +1,16 @@
+# CogniSpeech - AI Speech Analysis Platform
+# Replace with your actual domain when deploying
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://cognispeech.com/sitemap.xml
+
+# Disallow sensitive areas (uncomment and modify as needed)
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /private/
+
+# Crawl delay (optional, in seconds)
+# Crawl-delay: 1

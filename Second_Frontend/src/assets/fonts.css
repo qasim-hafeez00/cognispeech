@@ -1,0 +1,103 @@
+/* CogniSpeech Typography System */
+
+/* Import Google Fonts (replace with your preferred fonts) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+/* CSS Custom Properties for Font Families */
+:root {
+  /* Primary font stack - for headings and UI */
+  --font-primary: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", sans-serif;
+
+  /* Secondary font stack - for body text */
+  --font-secondary: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    sans-serif;
+
+  /* Monospace font stack - for code and technical content */
+  --font-mono: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+
+  /* Font weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
+
+/* Base typography styles */
+body {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading styles using primary font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+/* Code and technical content */
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+}
+
+/* 
+  CHAKRA UI THEME INTEGRATION
+  
+  To use these fonts in your Chakra UI theme, add this to your theme configuration:
+  
+  import { extendTheme } from '@chakra-ui/react'
+  
+  const theme = extendTheme({
+    fonts: {
+      heading: 'var(--font-primary)',
+      body: 'var(--font-secondary)',
+      mono: 'var(--font-mono)',
+    },
+    fontWeights: {
+      light: 'var(--font-weight-light)',
+      normal: 'var(--font-weight-normal)',
+      medium: 'var(--font-weight-medium)',
+      semibold: 'var(--font-weight-semibold)',
+      bold: 'var(--font-weight-bold)',
+    },
+  })
+  
+  USAGE EXAMPLES:
+  
+  // In React components:
+  <Text fontFamily="heading">This uses the primary font</Text>
+  <Text fontFamily="body">This uses the secondary font</Text>
+  <Code fontFamily="mono">console.log('monospace')</Code>
+  
+  // In CSS:
+  .custom-heading {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-bold);
+  }
+  
+  CUSTOMIZATION:
+  
+  1. Replace Google Fonts import with your preferred fonts
+  2. Update the CSS custom properties with your font stack
+  3. Modify font weights as needed for your design system
+  4. Import this file in your main CSS or index.css
+*/
+
+/* Optional: Preload critical fonts for better performance */
+/*
+<link rel="preload" href="path/to/font.woff2" as="font" type="font/woff2" crossorigin>
+*/
